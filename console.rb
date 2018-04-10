@@ -1,8 +1,7 @@
 require("pry-byebug")
 require_relative("./Space_Cowboys.rb")
 
-#Comment in once delete all is made
-#SpaceCowboy.delete_all()
+SpaceCowboy.delete_all()
 
 cowboy1 = SpaceCowboy.new({
 "name" => "Han Solo",
@@ -28,3 +27,6 @@ cowboy3 = SpaceCowboy.new({
 cowboy1.save()
 cowboy2.save()
 cowboy3.save()
+
+binding.pry
+nil

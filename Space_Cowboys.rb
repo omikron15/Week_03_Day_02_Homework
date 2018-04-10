@@ -33,49 +33,32 @@ class SpaceCowboy
     @id = result[0]["id"].to_i
   end
 
-
-
-
-  # def save()
-  #   #Create db connection
-  #   db = PG.connect({dbname: "pizza_shop", host: "localhost"})
-  #
-  #   #Create sql statment with placeholders for variables
-  #   sql = "INSERT INTO pizza_orders
-  #   (first_name, last_name, topping, quantity)
-  #   VALUES
-  #   ($1, $2, $3, $4) RETURNING id;"
-  #
-  #   #Create array to store values to be added to SQL statment
-  #   values = [@first_name, @last_name, @topping, @quantity]
-  #
-  #   #Creates prepared DB stament called "Save" ready to be executed
-  #   db.prepare("Save",sql)
-  #
-  #   #Executes db statement called "Save" which is combined with values array to get string
-  #   result = db.exec_prepared("Save", values)
-  #
-  #   #Close DB connection
-  #   db.close()
-  #
-  #   @id = result[0]["id"].to_i
-  # end #End of save method
-
-  #
   # def delete()
+  # db = PG.connect({dbname: "space_cowboys", host: "localhost"})
   #
   # end
-  #
+
   # def update()
+  # db = PG.connect({dbname: "space_cowboys", host: "localhost"})
   #
   # end
   #
-  # def self.all
-  #
-  # end
-  #
-  # def self.delete_all
-  #
-  # end
+  def self.all
+  db = PG.connect({dbname: "space_cowboys", host: "localhost"})
+  sql = "SELECT * FROM cowboys"
+  db.prepare("Select", sql)
+  results = db.exec_prepared("Select")
+  db.close
+  return results.map {|result| SpaceCowboy.new (result)}
+  end
+
+  def self.delete_all
+    db = PG.connect({dbname: "space_cowboys", host: "localhost"})
+    sql = "DELETE FROM cowboys"
+    db.prepare("Delete_all", sql)
+    db.exec_prepared("Delete_all")
+    db.close
+  end
+
 
 end #End of class
