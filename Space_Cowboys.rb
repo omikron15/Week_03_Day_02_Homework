@@ -75,12 +75,6 @@ class SpaceCowboy
     db.close
   end
 
-  # Implement a find_by_name method that returns one instance of your
-  # class when a name is passed in, or nil if no instance is found.
-  # Note: this will probably be another class method
-  # self.find_by_name(name) (do you have to use a map method if it's
-  # a single result?
-
   def self.find_by_name(name)
       db = PG.connect({dbname: "space_cowboys", host: "localhost"})
       sql = "SELECT * from cowboys WHERE name = $1"
@@ -92,8 +86,27 @@ class SpaceCowboy
       if results.count == 0
         return nil
       else
-        return results[0]
+        return SpaceCowboy.new(results[0])
       end
+  end
+
+  #Implement a second self.find method that returns one instance
+  #of your class when an id is passed in.
+
+  def self.find_by_id(id)
+
+    db = PG.connect({dbname: "space_cowboys", host: "localhost"})
+    sql = "SELECT * from cowboys WHERE id = $1"
+    values = [id]
+    db.prepare("Find", sql)
+    results = db.exec_prepared("Find", values)
+    db.close
+
+    if results.count == 0
+      return nil
+    else
+      return SpaceCowboy.new(results[0])
+    end
 
   end
 
